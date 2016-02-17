@@ -5,9 +5,9 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
+angular.module('starter', ['ionic','ngCordova', 'starter.controllers', 'starter.services'])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform,$cordovaGeolocation,$log) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -22,17 +22,25 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     }
 
 
+    var watchOptions = {
+      timeout : 3000,
+      enableHighAccuracy: false // may cause errors if true
+    };
 
     var watch = $cordovaGeolocation.watchPosition(watchOptions);
     watch.then(
       null,
       function(err) {
         // error
+        $log.log(err);
       },
       function(position) {
-        var lat  = position.coords.latitude
-        var long = position.coords.longitude
+        var lat  = position.coords.latitude;
+        var lon = position.coords.longitude;
+
+        $log.log(lat,lon);
     });
+
 
   });
 })
