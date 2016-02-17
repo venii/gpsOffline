@@ -7,7 +7,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic','ngCordova', 'starter.controllers', 'starter.services'])
 
-.run(function($ionicPlatform,$cordovaGeolocation,$log) {
+.run(function($ionicPlatform,$cordovaGeolocation,$log,$rootScope) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -37,7 +37,10 @@ angular.module('starter', ['ionic','ngCordova', 'starter.controllers', 'starter.
       function(position) {
         var lat  = position.coords.latitude;
         var lon = position.coords.longitude;
-
+        
+        $rootScope.lat = lat;
+        $rootScope.lon = lon;
+        
         $log.log(lat,lon);
     });
 
